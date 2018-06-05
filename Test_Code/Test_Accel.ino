@@ -11,4 +11,18 @@ void setup (){
 void loop(){
   int x_val_volt, y_val_volt, z_val_volt;
 
+  x_val_volt = analogRead(x_out); /* Digital x_out pin */
+  y_val_volt = analogRead(y_out); /* Digital y_out pin */
+  z_val_volt = analogRead(z_out); /* Digital z_out pin */
+
+      Serial.print("Digital x = ");
+      Serial.print(x_val_volt);
+      Serial.print("\t\t\t\t");
+      Serial.print("Digital y = ");
+      Serial.print(y_adc_value);
+      Serial.print("\t\t\t\t");
+      Serial.print("Digital z = ");
+      Serial.print(z_adc_value);
+      Serial.print("\t\t\t\");
+      delay(1000);
   }
