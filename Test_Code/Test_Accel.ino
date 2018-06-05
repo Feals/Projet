@@ -24,5 +24,5 @@ void loop(){
       Serial.print(z_adc_value);
       Serial.print("\t\t\t\t");
       delay(1000);
-
+bite
   }
