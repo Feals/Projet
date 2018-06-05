@@ -1,4 +1,3 @@
-#include <math.h>
 const int x_out = A1; /* axe_x ADXL */
 const int y_out = A2; /* axe_y ADXL */
 const int z_out = A3; /* axe_z ADXL */
