@@ -22,6 +22,6 @@ void loop(){
       Serial.print("\t\t\t\t");
       Serial.print("Digital z = ");
       Serial.print(z_adc_value);
-      Serial.print("\t\t\t\");
+      Serial.print("\t\t\t\t");
       delay(1000);
   }
