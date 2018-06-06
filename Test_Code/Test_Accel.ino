@@ -1,6 +1,6 @@
-const int x_out = A1; /* axe_x ADXL */
-const int y_out = A2; /* axe_y ADXL */
-const int z_out = A3; /* axe_z ADXL */
+const int x_out = A1; /* axe_x Analog */
+const int y_out = A2; /* axe_y Analog */
+const int z_out = A3; /* axe_z Analog */
 
 void setup (){
   Serial.begin(9600)
