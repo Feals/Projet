@@ -14,5 +14,4 @@
       Serial1.print(",");
       Serial1.print(c);
       delay(1000);
-
   }
