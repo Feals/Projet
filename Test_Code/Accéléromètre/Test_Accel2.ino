@@ -1,5 +1,4 @@
 #include <math.h>
-#include <ADXL335.h>
 const int x_out = A1; /* axe_x Analog */
 const int y_out = A2; /* axe_y Analog */
 const int z_out = A3; /* axe_z Analog */
@@ -34,11 +33,11 @@ analogReference(18);
             G=sqrt(G);
           //Calcul de l'accéleration en m/s²
             A = (G * 9.81);
+            //Calcul de l'angle de l'accéléromètre en degrés.
+              Axy=xg*xg+yg*yg;
+              Axy=sqrt(Axy);
+              Angle = 180.0/pi * atan2(Axy,zg);
 
-   Axy=xg*xg+yg*yg;
-   Axy=sqrt(Axy);
-
-Angle = 180.0/pi * atan2(Axy,zg);
 
   Serial.print("Accélération G :");
   Serial.print(G);

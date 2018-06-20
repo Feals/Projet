@@ -102,8 +102,6 @@ void loop()
 //*************************************************************************************************************//
     if (status == ACI_EVT_CONNECTED) {
 
-//Je recois des données !
-//*************************************************************************************************************//
     if (BTLEserial.available()) {
       Serial.print("* "); Serial.print(BTLEserial.available()); Serial.println(F("Donnée recu de votre téléphone"));
     }
@@ -113,7 +111,7 @@ void loop()
       Serial.print(c);
     }
 
-//*************************************************************************************************************//
+
       Serial.setTimeout(100);
       String sa = doubleToString(A,2);
 
@@ -121,12 +119,12 @@ void loop()
       uint8_t sendbufferA[5];
       sa.getBytes(sendbufferA, 5);
       char sendbuffersizeA = min(5, sa.length());
-delay (100);
-      Serial.print(F("\n* Envoie -> \"")); Serial.print((char *)sendbufferA); Serial.println("\"");
+delay (1000);
+      Serial.print(F("\n* Sending -> \"")); Serial.print((char *)sendbufferA); Serial.println("\"");
 
       // Envoie des données
       BTLEserial.write(sendbufferA, sendbuffersizeA);
-
+     
        Serial.setTimeout(100);
       String sg = doubleToString(G,2);
 
@@ -134,8 +132,8 @@ delay (100);
       uint8_t sendbufferG[5];
       sg.getBytes(sendbufferG, 5);
       char sendbuffersizeG = min(5, sg.length());
-delay (100);
-      Serial.print(F("\n* Envoie -> \"")); Serial.print((char *)sendbufferG); Serial.println("\"");
+delay (1000);
+      Serial.print(F("\n* Sending -> \"")); Serial.print((char *)sendbufferG); Serial.println("\"");
 
       // Envoie des données
       BTLEserial.write(sendbufferG, sendbuffersizeG);
@@ -146,8 +144,8 @@ delay (100);
       uint8_t sendbufferAN[5];
       san.getBytes(sendbufferAN, 5);
       char sendbuffersizeAN = min(5, san.length());
-delay (100);
-      Serial.print(F("\n* Envoie -> \"")); Serial.print((char *)sendbufferAN); Serial.println("\"");
+delay (1000);
+      Serial.print(F("\n* Sending -> \"")); Serial.print((char *)sendbufferAN); Serial.println("\"");
 
       // Envoie des données
       BTLEserial.write(sendbufferAN, sendbuffersizeAN);
