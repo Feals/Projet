@@ -61,7 +61,7 @@ void loop()
   int xv,yv,zv; //Variable en volt
   double xg,yg,zg; // Variable en g
   double A,G,Axy; // A - Accélération _ G - Résultante
- int Angle;
+  int Angle;
   //Référence a 3.3 volt (Pin 18=Ref voir datasheet)
   analogReference(18);
 
@@ -87,6 +87,9 @@ void loop()
                 Axy=sqrt(Axy);
                 Angle = 180.0/pi * atan2(Axy,zg);
 
+
+
+//*************************************************************************************************************//
 //Affiche accelération en g en haut a gauche
 lcd.setCursor(0,0);
 lcd.print("Ag=");
@@ -104,11 +107,10 @@ lcd.setCursor(8,0);
 lcd.print("A=");
 lcd.setCursor(10,0);
 lcd.print(Angle );
-delay(300);
-
-// On clear pour les valeurs d'angles a 3 chiffres
+delay(450);
 lcd.clear();
 
+//*************************************************************************************************************//
 // Test de status de la puce
 //*************************************************************************************************************//
     BTLEserial.pollACI();
@@ -119,9 +121,17 @@ lcd.clear();
         }
         if (status == ACI_EVT_CONNECTED) {
             Serial.println(F("* Connecté !"));
+            lcd.setCursor(4,0);
+            lcd.print("Connecte");
+            delay(1000);
+            lcd.clear();
         }
         if (status == ACI_EVT_DISCONNECTED) {
             Serial.println(F("* Vous avez été déconnecté :/ "));
+            Serial.println(F("* Connecté !"));
+            lcd.setCursor(3,0);
+            lcd.print("Deconnecte");
+            delay(1000);
         }
         laststatus = status; // Actualisation du status
     }
@@ -151,7 +161,7 @@ lcd.clear();
       uint8_t sendbufferA[5];
       sa.getBytes(sendbufferA, 5);
       char sendbuffersizeA = min(5, sa.length());
-delay (100);
+      delay (100);
       Serial.print(F("\n* Envoie -> \"")); Serial.print((char *)sendbufferA); Serial.println("\"");
 
       // Envoie des données
@@ -165,7 +175,7 @@ delay (100);
       uint8_t sendbufferG[5];
       sg.getBytes(sendbufferG, 5);
       char sendbuffersizeG = min(5, sg.length());
-delay (100);
+      delay (100);
       Serial.print(F("\n* Envoie -> \"")); Serial.print((char *)sendbufferG); Serial.println("\"");
 
       // Envoie des données
@@ -177,7 +187,7 @@ delay (100);
       uint8_t sendbufferAN[5];
       san.getBytes(sendbufferAN, 5);
       char sendbuffersizeAN = min(5, san.length());
-delay (100);
+      delay (100);
       Serial.print(F("\n* Envoie -> \"")); Serial.print((char *)sendbufferAN); Serial.println("\"");
 
       // Envoie des données
