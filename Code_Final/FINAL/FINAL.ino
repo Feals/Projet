@@ -1,10 +1,16 @@
 #include <SPI.h>
 #include <math.h>
+#include <LiquidCrystal.h>
 #include "Adafruit_BLE_UART.h"
 #define ADAFRUITBLE_REQ 10 // Pin MOSI
 #define ADAFRUITBLE_RDY 2 // Pin RDY
 #define ADAFRUITBLE_RST 9 //PIN RST
 #define pi 3.141592 // Utile plus bas lors du calcul des angles
+
+//Déclaration de l'écran LCD
+const int rs = 8, en = 7 ,d4 = 6, d5 = 5, d6 = 4, d7 = 3;
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
+
 
 // Déclaration des pins de l'accéléromètre
 const int x_out = A1; /* axe_x Analog */
@@ -43,6 +49,8 @@ void setup(void)
     while(!Serial);
     BTLEserial.setDeviceName("Accel_S"); /*Nom du module Bluetooth */
     BTLEserial.begin();
+    lcd.begin(16,2);
+    lcd.clear();
 }
 
 aci_evt_opcode_t laststatus = ACI_EVT_DISCONNECTED; // On met le dernier status en déconnecté
@@ -52,8 +60,8 @@ void loop()
 
   int xv,yv,zv; //Variable en volt
   double xg,yg,zg; // Variable en g
-  double A,G,Axy,Angle; // A - Accélération _ G - Résultante
-
+  double A,G,Axy; // A - Accélération _ G - Résultante
+ int Angle;
   //Référence a 3.3 volt (Pin 18=Ref voir datasheet)
   analogReference(18);
 
@@ -79,6 +87,27 @@ void loop()
                 Axy=sqrt(Axy);
                 Angle = 180.0/pi * atan2(Axy,zg);
 
+//Affiche accelération en g en haut a gauche
+lcd.setCursor(0,0);
+lcd.print("Ag=");
+lcd.setCursor(3,0);
+lcd.print(G);
+
+//Affiche accélération en m/s²
+lcd.setCursor(0,1);
+lcd.print("Ams=");
+lcd.setCursor(4,1);
+lcd.print(A);
+
+//Affiche angle de l'accélérometre
+lcd.setCursor(8,0);
+lcd.print("A=");
+lcd.setCursor(10,0);
+lcd.print(Angle );
+delay(300);
+
+// On clear pour les valeurs d'angles a 3 chiffres
+lcd.clear();
 
 // Test de status de la puce
 //*************************************************************************************************************//
@@ -113,6 +142,7 @@ void loop()
       Serial.print(c);
     }
 
+//Envoie de l'accélération m/s² puis Accélération en g puis L'angle de l'accélérometre
 //*************************************************************************************************************//
       Serial.setTimeout(100);
       String sa = doubleToString(A,2);
@@ -127,7 +157,8 @@ delay (100);
       // Envoie des données
       BTLEserial.write(sendbufferA, sendbuffersizeA);
 
-       Serial.setTimeout(100);
+
+      Serial.setTimeout(100);
       String sg = doubleToString(G,2);
 
       // Conversion des données
@@ -150,7 +181,7 @@ delay (100);
       Serial.print(F("\n* Envoie -> \"")); Serial.print((char *)sendbufferAN); Serial.println("\"");
 
       // Envoie des données
-      BTLEserial.write(sendbufferAN, sendbuffersizeAN);
+      BTLEserial.write(sendbufferAN,sendbuffersizeAN);
 
   }
 }
